@@ -19,7 +19,8 @@ const routes = [
   {
     path: '/add-contact',
     name: 'ContactForm',
-    component: ContactForm
+    component: ContactForm,
+    props: route => ({ query: route.query.q })
   }
 ]
 

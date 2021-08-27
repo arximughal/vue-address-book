@@ -3,10 +3,10 @@
     <div class="contacts-list">
       <h1>
         Address Book
-        <router-link to='/add-contact' class="add-contact-btn">+ Add New Contact</router-link>
+        <router-link to='/add-contact' class="add-contact-btn" @on-add-contact="addContact">+ Add New Contact</router-link>
       </h1>
       <div class="contacts-container">
-        <Contact v-for="contact in contacts" :key="contact.email" :contact="contact" />
+        <Contact v-for="contact in contacts" :key="contact.email" :initialContact="contact" />
       </div>
     </div>
   </div>
@@ -51,6 +51,11 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    addContact() {
+      console.log('eventHandledSuccessfully');
+    },
   }
 }
 </script>

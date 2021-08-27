@@ -28,7 +28,12 @@
   export default {
     name: 'Contact',
     props: {
-      contact: Object
+      initialContact: Object
+    },
+    data() {
+      return {
+        contact: this.initialContact
+      }
     }
   }
 </script>
