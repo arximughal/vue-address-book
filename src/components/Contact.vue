@@ -2,7 +2,7 @@
   <div class="contact-container">
     <div class="contact-row">
       <div class="contact-column-value name">
-        {{ contact.name }}
+        {{ contact.name }} <button @click="deleteContact(elementIndex)" class="">Delete</button>
       </div>
     </div>
     <div class="contact-row">
@@ -27,9 +27,7 @@
 <script>
   export default {
     name: 'Contact',
-    props: {
-      initialContact: Object
-    },
+    props: ['initialContact', 'deleteContact', 'elementIndex'],
     data() {
       return {
         contact: this.initialContact
@@ -71,5 +69,14 @@
 
   .contact-column-value.name {
     font-size: 18px;
+  }
+
+  .contact-column-value.name button {
+    display: none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .contact-container:hover .contact-column-value.name button {
+    display: inline-block;
   }
 </style>

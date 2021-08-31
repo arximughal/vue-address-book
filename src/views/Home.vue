@@ -3,10 +3,10 @@
     <div class="contacts-list">
       <h1>
         Address Book
-        <router-link to='/add-contact' class="add-contact-btn" @on-add-contact="addContact">+ Add New Contact</router-link>
+        <router-link to='/add-contact' class="add-contact-btn">+ Add New Contact</router-link>
       </h1>
       <div class="contacts-container">
-        <Contact v-for="contact in contacts" :key="contact.email" :initialContact="contact" />
+        <Contact v-for="(contact, index) in contacts" :key="contact.email" :initialContact="contact" :delete-contact="deleteContact" :element-index="index" />
       </div>
     </div>
   </div>
@@ -15,7 +15,7 @@
 <script>
 // @ is an alias to /src
 import Contact from '@/components/Contact.vue'
-
+const storage = window.localStorage;
 export default {
   name: 'Home',
   components: {
@@ -23,7 +23,21 @@ export default {
   },
   data: function() {
     return {
-      contacts: [
+      contacts: JSON.parse(storage.getItem('contacts'))
+    }
+  },
+  methods: {
+    deleteContact(index) {
+      const contacts = JSON.parse(storage.getItem('contacts'));
+      contacts.splice(index, 1);
+      storage.setItem('contacts', JSON.stringify(contacts));
+      this.contacts = contacts;
+    },
+  },
+  mounted() {
+    const existingContacts = storage.getItem('contacts');
+    if (existingContacts === null) {
+      storage.setItem('contacts', JSON.stringify([
         {
           name: 'Iron Man',
           email: 'iron.man@avengers.inc',
@@ -49,13 +63,8 @@ export default {
           email: 'winter.soldier@avengers.inc',
           phone: '+1-555-555-5555'
         }
-      ]
+      ]))
     }
-  },
-  methods: {
-    addContact() {
-      console.log('eventHandledSuccessfully');
-    },
   }
 }
 </script>

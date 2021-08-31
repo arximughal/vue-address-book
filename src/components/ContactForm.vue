@@ -23,19 +23,19 @@
 <script>
 export default {
   name: 'ContactForm',
-  props: {
-    initialContact: Object
-  },
+  props: ['initialContact', 'addContact'],
   data: function () {
     return {
       contact: typeof this.initialContact !== 'undefined' ? this.initialContact : {}
     }
   },
   methods: {
-    saveContact(e) {
-      console.log(e);
-      console.log('saveContactCalled');
-      this.$emit('onAddContact')
+    saveContact() {
+      const storage = window.localStorage;
+      const contacts = JSON.parse(storage.getItem('contacts'));
+      contacts.push(this.contact);
+      storage.setItem('contacts', JSON.stringify(contacts));
+      this.$router.push('/');
     }
   }
 }
